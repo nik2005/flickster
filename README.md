@@ -4,7 +4,7 @@ Flicks shows the latest movies currently playing in theaters. The app utilizes t
 
 ## User Stories
 
-The following functionalities are completed:
+The following functionality are completed:
 
 * User can **scroll through current movies** from the Movie Database API
 * Layout is optimized with the [ViewHolder](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView#improving-performance-with-the-viewholder-pattern) pattern.
