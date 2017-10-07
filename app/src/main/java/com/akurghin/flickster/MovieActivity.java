@@ -1,8 +1,10 @@
 package com.akurghin.flickster;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.akurghin.flickster.adapters.MovieArrayAdapter;
@@ -41,13 +43,12 @@ public class MovieActivity extends AppCompatActivity {
         httpClient.get(API_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray moviesJsonResult = null;
+                JSONArray moviesJsonResult;
 
                 try {
                     moviesJsonResult = response.getJSONArray("results");
                     movies.addAll(Movie.fromJsonArray(moviesJsonResult));
                     movieAdapter.notifyDataSetChanged();
-                    Log.d("DEBUG", movies.toString());
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -57,6 +58,16 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MovieActivity.this, MoviewDetailActivity.class);
+                Movie movie = (Movie) adapterView.getItemAtPosition((int) l);
+                intent.putExtra(MoviewDetailActivity.MOVIE_KEY, movie);
+                startActivity(intent);
             }
         });
     }
